@@ -5,7 +5,7 @@ import com.consumer.messaging.RabbitConsumer;
 public class ConsumerApp {
     public static void main(String[] args) {
 
-    	//Rama: ExamenParcial
+    	
         try {
             RabbitConsumer consumer = new RabbitConsumer();
 
