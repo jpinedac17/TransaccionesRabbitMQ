@@ -74,23 +74,12 @@ El Consumer implementa un modelo **at least once**:
 
 ------------------------------------------------------------------------
 
-## Endpoint utilizado
-
-POST\
-https://7e0d9ogwzd.execute-api.us-east-1.amazonaws.com/default/guardarTransacciones
-
-Este endpoint almacena las transacciones en **Amazon DynamoDB**.
-
-------------------------------------------------------------------------
-
 ## Tecnologías
 
 -   Java 11
 -   RabbitMQ
 -   Jackson (JSON)
 -   Java HttpClient
--   API Gateway
--   DynamoDB
 
 ------------------------------------------------------------------------
 
