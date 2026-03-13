@@ -1,0 +1,41 @@
+package umg.edu.gt.producer.model;
+
+public class Detalle {
+    private String nombreBeneficiario;
+    private String tipoTransferencia;
+    private String descripcion;
+    private Referencias referencias;
+
+    // Constructor vacio (lo requiere asi jackson para mapear el json)
+    public Detalle() {
+    }
+
+    //Getters y setters
+    public String getNombreBeneficiario() {
+        return nombreBeneficiario;
+    }
+    public void setNombreBeneficiario(String nombreBeneficiario) {
+        this.nombreBeneficiario = nombreBeneficiario;
+    }
+
+    public String getTipoTransferencia() {
+        return tipoTransferencia;
+    }
+    public void setTipoTransferencia(String tipoTransferencia) {
+        this.tipoTransferencia = tipoTransferencia;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Referencias getReferencias() {
+        return  referencias;
+    }
+    public void setReferencias(Referencias referencias) {
+        this.referencias = referencias;
+    }
+}
