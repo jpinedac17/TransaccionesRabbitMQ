@@ -85,4 +85,4 @@ El Consumer implementa un modelo **at least once**:
 
 ## Link del video
 
-(Enlace aqui)
+https://drive.google.com/file/d/1dj5Qyu5OllTl69Pv_jQygUHVFIThfCTy/view?usp=drive_link
