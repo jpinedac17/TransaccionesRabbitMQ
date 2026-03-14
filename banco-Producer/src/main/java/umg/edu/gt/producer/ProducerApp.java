@@ -17,8 +17,17 @@ public class ProducerApp {
 
             // Recorrer transacciones y enviarlas a Rabbitmq
             for (Transaccion transaccion : lote.getTransaccions()) {
-                String banco = transaccion.getBancoDestino();
-                rabbit.publicarTransaccion(banco, transaccion);
+            	double monto = transaccion.getMonto();
+                
+                if (monto > 4000) {
+                	String cola = "Cola transacciones aceptadas";
+                	String banco = transaccion.getBancoDestino();
+                    rabbit.publicarTransaccion(banco, transaccion);
+                } else {
+                	String cola = "cola_rechazados";
+                	//String banco = transaccion.getBancoDestino();
+                    rabbit.publicarTransaccion(cola, transaccion);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

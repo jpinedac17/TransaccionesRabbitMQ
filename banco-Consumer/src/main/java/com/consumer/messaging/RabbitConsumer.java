@@ -34,7 +34,7 @@ public class RabbitConsumer {
                 false,  //autoACK desactivado
                 (consumerTag, delivery) -> {
                     String mensaje = new String(delivery.getBody());
-                    System.out.println("Mensaje recibido: " + mensaje);
+                    //System.out.println("Mensaje recibido: " + mensaje);
 
                     try {
 
@@ -48,34 +48,39 @@ public class RabbitConsumer {
                         // Modificar idTransaccion
                         String nuevoId = transaccion.getIdTransaccion() + "-" + UUID.randomUUID();
                         transaccion.setIdTransaccion(nuevoId);
-
-                        // Enviar a API por post
-                        HttpResponse<String> response =
-                                apiClient.enviarTransaccion(transaccion);
-
-                        if (response.statusCode() == 201) {
-
-                            channel.basicAck(delivery.getEnvelope().getDeliveryTag(), false);
-                            System.out.println("Transaccion guardada");
-
+                        
+                        if (cola.equals("cola_rechazados")) {
+                        	System.out.println("Transaccion rechazada: " + transaccion.getIdTransaccion() + " monto: " + transaccion.getMonto());
                         } else {
-
-                            System.out.println("Primer intento falló, reintentando...");
-
-                            HttpResponse<String> retry =
+                        	// Enviar a API por post
+                            HttpResponse<String> response =
                                     apiClient.enviarTransaccion(transaccion);
 
-                            if (retry.statusCode() == 201) {
+                            if (response.statusCode() == 201) {
 
                                 channel.basicAck(delivery.getEnvelope().getDeliveryTag(), false);
-                                System.out.println("Transaccion guardada en reintento");
+                                System.out.println("Transaccion guardada: " + transaccion.getIdTransaccion() + " monto: " + transaccion.getMonto());
 
                             } else {
 
-                                System.out.println("Falló incluso en reintento");
+                                System.out.println("Primer intento falló, reintentando...");
 
+                                HttpResponse<String> retry =
+                                        apiClient.enviarTransaccion(transaccion);
+
+                                if (retry.statusCode() == 201) {
+
+                                    channel.basicAck(delivery.getEnvelope().getDeliveryTag(), false);
+                                    System.out.println("Transaccion guardada en reintento");
+
+                                } else {
+
+                                    System.out.println("Falló incluso en reintento");
+
+                                }
                             }
                         }
+
                     } catch (Exception e) {
 
                         System.out.println("Error procesando mensaje: " + e.getMessage());
